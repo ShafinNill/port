@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Local Data file example</title>
+    <link rel="stylesheet" text="text/css" href="userstyle.css">
+</head>
+<body>
+    <div class="container">
+    
+    <button align="right" id="showinfo">Load Github Users</button>
+    <div id='showme'>
+
+    </div>
+</div>
+    <script>
+        document.getElementById("showinfo").addEventListener('click',onProcess);
+
+        function onProcess() {
+            var req = new XMLHttpRequest();
+            req.open('GET','https://api.github.com/users',true);
+            req.onload = function() {
+                if(req.status==200){
+                    var people = JSON.parse(req.responseText);
+                    var display ='<h1>Github Users List</h1>';
+                    for(var i in people){
+                       
+                    display +='<div class='+"users"+' >' +'<div class='+"im"+' >'+'<img src="'+people[i].avatar_url+' width="100px" height="100px" >' +'</div>'+'<div class='+"unLi"+' >'+'<ul>' +'<li>ID: '+people[i].id+'</li>' +'<li>Login: '+people[i].login+'</li>' +"<li><a href = '"+ people[i].repos_url  +"'>Repos:'" + people[i].repos_url + '</a>'+'</li>'+'</ul>' +'</div>'+'</div>';
+
+
+
+                  }
+                  document.getElementById('showme').innerHTML = display;
+                    console.log("ok");
+
+
+                }
+
+
+            }
+            req.send();
+        }
+    </script>
+    
+</body>
+</html>
